@@ -41,7 +41,7 @@ router.post('/register', (req, res) => {
         }
     })
 
-    let user = new User({
+    let newUser = new User({
         name,
         username,
         email,
