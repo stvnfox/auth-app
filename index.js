@@ -29,6 +29,10 @@ mongoose.connect(db, { useNewUrlParser:true })
         console.log(`Unable to connect with the database: ${err}`)
     })
 
+// Create users route
+const users = require('./routes/api/users')
+app.use('/api/users', users)
+
 // Spin up server
 const PORT = process.env.PORT || 5001
 
