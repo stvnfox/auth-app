@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import LoginForm from '@/components/LoginForm.vue'
+import RegisterForm from '@/components/RegisterForm.vue'
 </script>
 
 <template>
   <div class="d-flex justify-content-center">
     <div class="col-md-6 col-xl-5">
-      <login-form/>
+      <register-form/>
     </div>
   </div>
 </template>

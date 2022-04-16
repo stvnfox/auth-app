@@ -2,13 +2,13 @@
 const menu = [
   {
     name: 'Home',
-    url: '/',
+    url: '/'
   },
   {
-    name: 'About',
-    url: '/about',
-  },
-];
+    name: 'Register',
+    url: '/register'
+  }
+]
 </script>
 
 <template>
