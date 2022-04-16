@@ -3,6 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
+const key = require('../../config/keys').secret
 const User = require('../../model/User')
 
 /**
@@ -10,7 +11,6 @@ const User = require('../../model/User')
  * @desc Register user
  * @access Public
  */
-
 router.post('/register', (req, res) => {
     let { name, username, email, password, confirm_password } = req.body
 
@@ -60,6 +60,51 @@ router.post('/register', (req, res) => {
                     msg: "User is now registered"
                 })
             })
+        })
+    })
+})
+
+/**
+ * @route POST api/users/login
+ * @desc Signing in with user credentials
+ * @access Public
+ */
+router.post('/login', (req, res) => {
+    User.findOne({ username: req.body.username })
+    .then(user => {
+        if(!user) {
+            return res.status(404).json({
+                success: false,
+                msg: "User is not found"
+            })
+        }
+
+        // Check password if user exist
+        bcrypt.compare(req.body.password, user.password)
+        .then(isMatch => {
+            if(isMatch) {
+                // Password is correct, send token for user
+                const payload = {
+                    _id: user._id,
+                    username: user.username,
+                    name: user.name,
+                    email: user.email
+                }
+                jwt.sign(payload, key, { 
+                    expiresIn: 604800
+                }, (err, token) => {
+                    res.status(200).json({
+                        success: true,
+                        token: `Bearer ${token}`,
+                        msg: "User is logged in."
+                    })
+                })
+            } else {
+                return res.status(404).json({
+                    success: false,
+                    msg: "Incorrect password"
+                })
+            }
         })
     })
 })
