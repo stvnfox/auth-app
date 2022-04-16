@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const path = require('path')
 const cors = require('cors')
+const passport = require('passport')
 
 // Init app
 const app = express()
@@ -18,6 +19,10 @@ app.use(bodyParser.json())
 app.use(cors())
 // Setting static directory
 app.use(express.static(path.join(__dirname, 'public')))
+// Passport middleware
+app.use(passport.initialize())
+// Passport strategy
+require('./config/passport')(passport)
 
 // Bring in DB config and connect with database
 const db = require('./config/keys').mongoURI
