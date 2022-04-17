@@ -24,11 +24,11 @@ const menu = [
 ]
 
 const logout = () => {
-  store.handleLogout()
-
   router.push({
     name: 'home'
   })
+
+  store.handleLogout()
 }
 </script>
 

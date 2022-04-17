@@ -11,8 +11,10 @@ onMounted(() => {
 </script>
 
 <template>
-    <h1>Profile</h1>
-    <pre>
-        {{ store.user }}
-    </pre>
+    <div v-if="store.isLoggedIn">
+      <h1>Profile</h1>
+      <pre>
+          {{ store.user }}
+      </pre>
+    </div>
 </template>
