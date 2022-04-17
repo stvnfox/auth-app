@@ -6,6 +6,10 @@ import Navbar from './components/Navbar.vue'
 <template>
   <div class="container">
     <navbar/>
-    <router-view/>
+    <router-view v-slot="{ Component }">
+      <transition mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>

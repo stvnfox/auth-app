@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import LoginForm from '@/components/LoginForm.vue'
+import Profile from '@/components/Profile.vue'
 </script>
 
 <template>
   <div class="d-flex justify-content-center">
-    <div class="col-lg-8 col-xl-5">
-      <login-form/>
+    <div class="col-md-6 col-xl-5">
+      <profile/>
     </div>
   </div>
 </template>

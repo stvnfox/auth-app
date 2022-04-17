@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/store/userStore'
+import userService from '@/services/userService'
+
+const store = useUserStore()
+const router = useRouter()
 
 const state = reactive({
   username: '',
@@ -25,7 +31,21 @@ const submitLogin = async () => {
   if (!isFormCorrect) {
     return console.log('Error')
   } else {
-    // Login call
+    store.handleLogin(() => userService.login({
+      username: state.username,
+      password: state.password
+    }))
+
+    watch(
+      () => store.status,
+      () => {
+        if (store.status === 'Success') {
+          router.push({
+            name: 'dashboard'
+          })
+        }
+      }
+    )
   }
 }
 </script>
@@ -70,6 +90,9 @@ const submitLogin = async () => {
                 <button type="submit" class="btn btn-primary mb-3">
                     Sign in
                 </button>
+                <div v-if="store.status === 'Failed'" class="text-danger mb-3">
+                    Login failed: Your username or password is incorrect
+                </div>
                 <p class="mb-0">
                     Don't have an account yet?
                     <router-link to="/register">

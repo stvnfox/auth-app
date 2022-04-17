@@ -1,19 +1,35 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import useVuelidate from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
+import { email, required } from '@vuelidate/validators'
 
 const state = reactive({
   username: '',
-  password: ''
+  password: '',
+  confirm_password: '',
+  name: '',
+  email: ''
 })
+
+const mustBeSame = (value: string) => value === state.password
 
 const rules = {
   username: {
     required
   },
+  name: {
+    required
+  },
+  email: {
+    required,
+    email
+  },
   password: {
     required
+  },
+  confirm_password: {
+    required,
+    mustBeSame
   }
 }
 
@@ -48,8 +64,41 @@ const submitRegister = async () => {
                         :class="{'is-invalid': v$.username.$error}"
                         class="form-control"
                     >
-                    <div class="text-sm text-danger" v-if="v$.username.$error">
+                    <div v-if="v$.username.$error" class="text-sm text-danger">
                         Username is required
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="name" class="mb-1">
+                        Name
+                    </label>
+                    <input
+                        id="Name"
+                        v-model="state.name"
+                        type="text"
+                        :class="{'is-invalid': v$.name.$error}"
+                        class="form-control"
+                    >
+                    <div v-if="v$.name.$error" class="text-sm text-danger">
+                        Name is required
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="email" class="mb-1">
+                        Email
+                    </label>
+                    <input
+                        id="email"
+                        v-model="state.email"
+                        type="text"
+                        :class="{'is-invalid': v$.email.$error}"
+                        class="form-control"
+                    >
+                    <div v-if="!v$.email.$model && v$.email.$error" class="text-sm text-danger">
+                        Email is required
+                    </div>
+                    <div v-if="v$.email.$model && v$.email.email.$invalid" class="text-sm text-danger">
+                        This is not a valid email address
                     </div>
                 </div>
                 <div class="form-group mb-3">
@@ -63,13 +112,37 @@ const submitRegister = async () => {
                         :class="{'is-invalid': v$.password.$error}"
                         class="form-control"
                     >
-                    <div class="text-danger" v-if="v$.password.$error">
+                    <div v-if="v$.password.$error" class="text-danger">
                         Password is required
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <div class="form-group mb-3">
+                    <label for="confirm_password" class="mb-1">
+                        Confirm password
+                    </label>
+                    <input
+                        id="confirm_password"
+                        v-model="state.confirm_password"
+                        type="password"
+                        :class="{'is-invalid': v$.confirm_password.$error}"
+                        class="form-control"
+                    >
+                    <div v-if="!v$.confirm_password.$model && v$.confirm_password.$error" class="text-danger">
+                        Password is required
+                    </div>
+                    <div v-if="v$.confirm_password.$model && v$.confirm_password.mustBeSame.$invalid" class="text-danger">
+                        Passwords must be the same
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mb-3">
                     Sign up
                 </button>
+                <p class="mb-0">
+                    Already have an account?
+                    <router-link to="/">
+                        Log in
+                    </router-link>
+                </p>
             </form>
         </div>
     </div>
