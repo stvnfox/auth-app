@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { email, required } from '@vuelidate/validators'
+import userService from '@/services/userService'
 
 const state = reactive({
   username: '',
@@ -10,6 +11,8 @@ const state = reactive({
   name: '',
   email: ''
 })
+
+const registerSucceed = ref(false)
 
 const mustBeSame = (value: string) => value === state.password
 
@@ -41,7 +44,16 @@ const submitRegister = async () => {
   if (!isFormCorrect) {
     return console.log('Error')
   } else {
-    // Register call
+    userService.signup({
+      name: state.name,
+      username: state.username,
+      email: state.email,
+      password: state.password,
+      confirm_password: state.confirm_password
+    })
+      .then(() => {
+        registerSucceed.value = true
+      })
   }
 }
 </script>
@@ -52,7 +64,7 @@ const submitRegister = async () => {
             <h2 class="mb-4">
                 Sign up
             </h2>
-            <form class="login-form" @submit.prevent="submitRegister">
+            <form v-if="registerSucceed" class="login-form" @submit.prevent="submitRegister">
                 <div class="form-group mb-3">
                     <label for="username" class="mb-1">
                         Username
@@ -144,6 +156,15 @@ const submitRegister = async () => {
                     </router-link>
                 </p>
             </form>
+            <div v-else>
+                <h3 class="text-success">
+                    Successfully registered
+                </h3>
+                <p>Welcome to the club!</p>
+                <router-link to="/" class="btn btn-primary">
+                    Click here to login
+                </router-link>
+            </div>
         </div>
     </div>
 </template>

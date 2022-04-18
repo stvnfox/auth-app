@@ -1,8 +1,12 @@
-import userRepository, { ILoginParams } from '../repositories/userRepository'
+import userRepository, { ILoginParams, IRegisterParams } from '../repositories/userRepository'
 
 export class userService {
   login (params: ILoginParams) {
     return userRepository.login(params)
+  }
+
+  signup (params: IRegisterParams) {
+    return userRepository.signup(params)
   }
 
   getUserData () {

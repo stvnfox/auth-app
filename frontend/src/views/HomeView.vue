@@ -4,7 +4,7 @@ import LoginForm from '@/components/LoginForm.vue'
 
 <template>
   <div class="d-flex justify-content-center">
-    <div class="col-lg-8 col-xl-5">
+    <div class="col-12 col-lg-8 col-xl-5">
       <login-form/>
     </div>
   </div>

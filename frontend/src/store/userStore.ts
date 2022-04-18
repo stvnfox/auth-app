@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ILoginResponse, IUser, IUserResponse } from '@/repositories/userRepository'
 import { AxiosResponse } from 'axios'
-import router from '@/router'
 
 export const useUserStore = defineStore('user-store', {
   state: () => ({
