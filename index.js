@@ -38,6 +38,10 @@ mongoose.connect(db, { useNewUrlParser:true })
 const users = require('./routes/api/users')
 app.use('/api/users', users)
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'))
+})
+
 // Spin up server
 const PORT = process.env.PORT || 5001
 

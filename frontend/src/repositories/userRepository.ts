@@ -43,15 +43,15 @@ export interface IRegisterResponse {
 
 export class userRepository {
   login (params: ILoginParams): Promise<AxiosResponse<ILoginResponse>> {
-    return axios.post('http://localhost:5001/api/users/login', params)
+    return axios.post('/api/users/login', params)
   }
 
   signup (params: IRegisterParams): Promise<AxiosResponse<IRegisterResponse>> {
-    return axios.post('http://localhost:5001/api/users/register', params)
+    return axios.post('/api/users/register', params)
   }
 
   getUserData (): Promise<AxiosResponse<IUserResponse>> {
-    return axios.get('http://localhost:5001/api/users/profile', {
+    return axios.get('/api/users/profile', {
       headers: {
         Authorization: store.token ?? ''
       }
