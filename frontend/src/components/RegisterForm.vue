@@ -64,7 +64,8 @@ const submitRegister = async () => {
             <h2 class="mb-4">
                 Sign up
             </h2>
-            <form v-if="registerSucceed" class="login-form" @submit.prevent="submitRegister">
+            <!-- TODO: Show message when no success registering -->
+            <form v-if="!registerSucceed" class="login-form" @submit.prevent="submitRegister">
                 <div class="form-group mb-3">
                     <label for="username" class="mb-1">
                         Username
