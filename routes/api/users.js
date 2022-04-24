@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const key = require('../../config/keys').secret
 const User = require('../../model/User')
+const sendEmail = require('../../config/mail').sendEmail
 
 /**
  * @route POST api/users/register
@@ -55,10 +56,17 @@ router.post('/register', (req, res) => {
             newUser.password = hash
             newUser.save()
             .then(user => {
+                // Send email to client
+                sendEmail(
+                    newUser.name,
+                    newUser.email
+                )
+
                 return res.status(201).json({
                     success: true,
                     msg: "User is now registered"
                 })
+
             })
         })
     })
