@@ -31,6 +31,7 @@ export const useUserStore = defineStore('user-store', {
     handleLogout () {
       this.user = {} as IUser
       this.token = ''
+      this.status = ''
     },
     handleUserRequest (userRequestFunc: () => Promise<AxiosResponse<IUserResponse>>) {
       return userRequestFunc()

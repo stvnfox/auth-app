@@ -35,19 +35,19 @@ const submitLogin = async () => {
       username: state.username,
       password: state.password
     }))
-
-    watch(
-      () => store.status,
-      () => {
-        if (store.status === 'Success') {
-          router.push({
-            name: 'dashboard'
-          })
-        }
-      }
-    )
   }
 }
+
+watch(
+  () => store.status,
+  () => {
+    if (store.status === 'Success') {
+      router.push({
+        name: 'dashboard'
+      })
+    }
+  }
+)
 </script>
 
 <template>
